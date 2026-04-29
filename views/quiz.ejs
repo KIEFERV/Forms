@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .correct{color:green;}
+        .incorrect{color:red;}
+    </style>
 </head>
 <body>
     <%  
@@ -16,10 +20,19 @@
          %>
 
          <% if(questionCount === 0){ %>
-            <h1> Welcom to the word quiz!</h1>
+            <h1> Welcome to the word quiz!</h1>
             <% } else { %>
             <h1>Score: <%=score %>/<%= questionCount %></h1>
 
+         <% } %>
+
+         <% if (locals.isCorrect !== undefined) { %>
+          <% if (locals.isCorrect) { %>
+        <span class="correct"> Correct!</span>
+        <% }else{ %>
+        <span class = "incorrect">Incorrect!</span>
+    <p>The correct definition was: <span class="correct"><%= locals.correctDef%></span></p>
+   <% } %>
          <% } %>
          <h2><%= correctWord %> - <%= correctPart %></h2>
          <form action = "quiz" method = "post">

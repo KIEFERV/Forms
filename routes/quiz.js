@@ -8,19 +8,28 @@ router.get("/",async(req,res)=>{
  console.log("Chosen Words: ", chosenWords);
  res.render('quiz',{chosenWords: chosenWords});
 });
-router.post("/", (req,res)=>{
+router.post("/", async(req,res)=>{
 console.log(req.body);
-let {userChoice, correctDef} = req.body;
-if(userChoice === correctDef)
-{
-    console.log("User guessed correctly!")
-    let score = totalCorrect+1;
+let {userChoice, correctDef, totalQuestion, totalCorrect} = req.body;
+let totalQuestions = parseInt(totalQuestion) + 1;
+let score = parseInt(totalCorrect);
+
+let isCorrect = userChoice === correctDef;
+if(isCorrect){
+    score +=1;
 }
-let total = totalQuestions+1;
-//Get another new set of words
-//Send that set of words back with the user score and other questions
-//Send some othe data back?
+let chosenWords = await getWords();
+
+res.render('quiz', {
+
+    chosenWords: chosenWords,
+    totalQuestions:totalQuestions,
+    totalCorrect:score,
+    isCorrect: isCorrect,
+    correctDef: correctDef
 });
+});
+
 let getWords = async() =>{
     console.log("Getting random Part!")
 let randomPart = getRandomPart();
