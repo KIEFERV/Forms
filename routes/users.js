@@ -1,45 +1,40 @@
 const express = require('express');
 const router = express.Router();
 
-router.route('/').get((req,res) =>{
-    res.send('User List')
-}).post((req,res)=>{
-  const firstName = req.body.firstName;
-  const isValid = firstName !== "";
-  if(isValid){
-    console.log(`Adding user: ${firstName}`);
-    users.push({firstName});
-   res.render('users/list',{users});
+const users = [
+  { firstName: "Bob", lastName: "Bobson", gender: "male", age: 67 },
+  { firstName: "Rita", lastName: "Rima", gender: "female", age: 29 }
+];
+
+router.get('/', (req, res) => {
+  res.redirect('/users/list');
+});
+
+router.post('/', (req, res) => {
+  const { firstName, lastName, gender, age } = req.body;
+  if (firstName) {
+    users.push({ firstName, lastName, gender, age });
+    res.redirect('/users/list');
+  } else {
+    res.render('users/new', { firstName, lastName, gender, age });
   }
-  else{
-    console.log("Error adding user!");
-    res.render("users/new", {firstName:firstName});
-  }
-});
-router.get('/list', (req,res)=>{
-    res.render('users/list', {users});
-});
-router.get('/new', (req,res) =>{  // /user/new
-    res.render('users/new',{firstName:"Test"})
-})
-router.route('/:id').get((req,res)=>{
-    console.log(req.user);
-    console.log('Getting user data!')
-    res.send(`Getting User data for id: ${req.params.id} `);
-}).delete((req,res)=>{
-    res.send(`Deleting User data for id: ${req.params.id}`);
-}).put((req,res)=>{
-    res.send(`Updating User data for id: ${req.params.id}`);
 });
 
-const users = [{firstName:"George"}, {firstName:"Justyna"}];
-
-
-//router.get('/:id', (req,res)=>{
-//res.send(`Getting User Data: ${req.params.id}`);
-//});
-router.param("id",(req, res, next,id)=>{
-    req.user = users[id];
-    next();
+router.get('/list', (req, res) => {
+  res.render('users/list', { users });
 });
+
+router.get('/new', (req, res) => {
+  res.render('users/new', { firstName: '', lastName: '', gender: '', age: '' });
+});
+
+router.param('id', (req, res, next, id) => {
+   req.user = users[parseInt(id)];
+  next();
+});
+
+router.get('/:id', (req, res) => {
+  res.render('users/show', { user: req.user, id: req.params.id });
+});
+
 module.exports = router;

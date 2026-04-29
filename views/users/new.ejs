@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <title>Document</title>
+  <title>Add New User</title>
 </head>
 <body>
-    <form action = "/users" method="post">
-        <label for = "firstName">
-            <input type = "text" name = "firstName" value= "<%= locals.firstName %>">
-
-        </label>
-        <button type = "submit">Submit</button>
-    </form>
+  <h1>Add New User</h1>
+  <form action="/users" method="post">
+    <label>First Name: <input type="text" name="firstName" value="<%= locals.firstName %>"></label><br>
+    <label>Last Name: <input type="text" name="lastName" value="<%= locals.lastName %>"></label><br>
+    <label>Gender:
+      Male <input type="radio" name="gender" value="male">
+      Female <input type="radio" name="gender" value="female">
+      Other <input type="radio" name="gender" value="other">
+    </label><br>
+    <label>Age: <input type="number" name="age" value="<%= locals.age %>"></label><br>
+    <button type="submit">Add User</button>
+  </form>
 </body>
 </html>

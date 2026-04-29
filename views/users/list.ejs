@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   
-    <title>Document</title>
+  <title>User List</title>
 </head>
 <body>
-    <H1> Our Current Users</H1>
-    <ul>
-    <%
-     let users = locals.users;
-    for(user of users){ %>
-<li> <%= user.firstName %></li>
-        <% } %>
-    </ul>
+  <h1>Our Current Users</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach((user, index) => { %>
+        <tr>
+          <td><a href="/users/<%= index %>"><%= user.firstName %></a></td>
+          <td><a href="/users/<%= index %>"><%= user.lastName %></a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <br>
+  <a href="/users/new">Add New User</a>
 </body>
 </html>
