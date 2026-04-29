@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>Document</title>
+</head>
+<body>
+    <H1> Our Current Users</H1>
+    <ul>
+    <%
+     let users = locals.users;
+    for(user of users){ %>
+<li> <%= user.firstName %></li>
+        <% } %>
+    </ul>
+</body>
+</html>
