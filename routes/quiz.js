@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/",async(req,res)=>{
  let chosenWords = await getWords();
  console.log("Chosen Words: ", chosenWords);
- res.render('quiz',{chosenWords});
+ res.render('quiz',{chosenWords: chosenWords});
 });
 router.post("/", (req,res)=>{
 console.log(req.body);
